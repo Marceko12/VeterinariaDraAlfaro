@@ -1,31 +1,61 @@
 package com.vet_dra_alfaro.vet_proyect.infrastructure.repository.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.vet_dra_alfaro.vet_proyect.application.dto.ServicesRequest;
+import com.vet_dra_alfaro.vet_proyect.domain.model.Services;
 import com.vet_dra_alfaro.vet_proyect.infrastructure.entity.ServicesEntity;
 
+@Component
 public class ServicesMapper {
-     public ServicesRequest toDto(ServicesEntity entity) {
+     // ---------- ENTITY → DOMAIN ----------
+    public Services toDomain(ServicesEntity entity) {
         if (entity == null) return null;
 
+        return new Services(
+            entity.getId(),
+            entity.getName(),
+            entity.getDescription(),
+            entity.getPrice()
+        );
+    }
+
+    // ---------- DOMAIN → ENTITY ----------
+    public ServicesEntity toEntity(Services domain) {
+        if (domain == null) return null;
+
+        ServicesEntity entity = new ServicesEntity();
+        entity.setId(domain.getId());
+        entity.setName(domain.getName());
+        entity.setDescription(domain.getDescription());
+        entity.setPrice(domain.getPrice());
+
+        return entity;
+    }
+
+    // ---------- DOMAIN → DTO ----------
+    public ServicesRequest toDto(Services domain) {
+        if (domain == null) return null;
+
         ServicesRequest dto = new ServicesRequest();
-        dto.setId(entity.getId());
-        dto.setName(entity.getName());
-        dto.setDescription(entity.getDescription());
-        dto.setPrice(entity.getPrice());
+        dto.setId(domain.getId());
+        dto.setName(domain.getName());
+        dto.setDescription(domain.getDescription());
+        dto.setPrice(domain.getPrice());
 
         return dto;
     }
 
-    public ServicesEntity toEntity(ServicesRequest dto) {
+    // ---------- DTO → DOMAIN ----------
+    public Services toDomainFromDto(ServicesRequest dto) {
         if (dto == null) return null;
 
-        ServicesEntity entity = new ServicesEntity();
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-        entity.setPrice(dto.getPrice());
-
-        return entity;
+        return new Services(
+            dto.getId(),
+            dto.getName(),
+            dto.getDescription(),
+            dto.getPrice()
+        );
     }
      
 }

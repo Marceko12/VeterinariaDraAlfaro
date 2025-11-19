@@ -6,5 +6,6 @@ import com.vet_dra_alfaro.vet_proyect.domain.model.Services;
 
 public interface ServicesRepository {
      List<Services> findAll();
+     List<Services> findByName(String name);
 
 }
